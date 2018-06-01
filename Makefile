@@ -12,7 +12,7 @@ endif
 brawl: main.o Critter.o Player.o Platform.o
 	g++ $(OPTS) -o brawl $(PATHS) main.o Critter.o Player.o Platform.o $(LIBS)
 
-main.o: main.cpp Critter.h Player.h Platform.h
+main.o: main.cpp Critter.h Player.h Platform.h glutfuncs.h
 	g++ $(OPTS) $(MACOSX_DEFINE) $(PATHS) -c main.cpp
 
 

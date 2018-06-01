@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "glutfuncs.h"
 #include "Critter.h"
 #include "Platform.h"
 #include "Player.h"
@@ -20,12 +21,9 @@ const float GRAVITY= -.1;
 const int PLATS=10;
 
 bool mouseIsDragging = false;
-int WIDTH = 700;
-int HEIGHT = 500;
 int xOffset=100;
 int yOffset=100;
 
-char programName[] = "¡Brawl!";
 
 int ptr[4];//start x, start y, stop x, stop y
 map<char,bool> keys;
@@ -36,41 +34,6 @@ Platform base(10,HEIGHT-5,WIDTH-20,100);
 //TODO: static vars for how many there are...
 Platform* platforms[PLATS];//10 including the floor
 
-// Print out text at coordinates x and y, char * passed gets printed out
-
-void drawText(int x, int y, char * text){
-  int l,i;
-  l=strlen(text);
-  glRasterPos2i( x, y); // location of text
-  for( i=0; i < l; i++) 
-    {
-      glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]); // font of text
-    }
-  // can change color of text but might look ugly
-  
-  glMatrixMode(GL_MODELVIEW); // code to prevent constant refresh (flickering)
-  glPopMatrix();
-  glMatrixMode(GL_PROJECTION);
-  glPopMatrix();
-  glEnable(GL_TEXTURE_2D);
-  
-  //glutSwapBuffers();
-  glutPostRedisplay();
-}
-
-void drawBox(int x,int y,int w,int h,bool fill){
-  if(fill){
-      glBegin(GL_POLYGON);
-  }else{
-    glBegin(GL_LINE_LOOP);
-  }
-  glLineWidth(20);
-  glVertex2f(x, y);
-  glVertex2f(x + w,y);
-  glVertex2f(x + w,y + h);
-  glVertex2f(x,y + h);
-  glEnd();
-}
 
 void keyboard(unsigned char c, int x, int y){
   keys[c]=true;
@@ -133,14 +96,6 @@ void keyboardUp(unsigned char c, int x, int y){
   }
 }
 
-void reshape(int w, int h){//probably shouldn't...
-  glViewport(0,0, (GLsizei) w, (GLsizei) h);
-  WIDTH = w; HEIGHT = h;
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho(0., WIDTH-1, HEIGHT-1, 0., -1.0, 1.0);
-}
-
 void mouse(int button, int state, int x, int y){
   if (GLUT_LEFT_BUTTON == button) {
     if (GLUT_DOWN == state){
@@ -159,7 +114,6 @@ void mouse(int button, int state, int x, int y){
   
   glutPostRedisplay();
 }
-
 
 void mouse_motion(int x,int y){
   if(mouseIsDragging){
@@ -223,44 +177,6 @@ void update(){//TODO: control accel and speed with pythag theorem?
   
   player.update();
   glutPostRedisplay();
-}
-
-void init(void){
-  // change color of window
-  glClearColor(50.0, 50.0, 50.0, 1.0);
-  glClear(GL_COLOR_BUFFER_BIT);
-  
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  // set up the coordinate system:  number of pixels along x and y
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho(0., WIDTH-1, HEIGHT-1, 0., -1.0, 1.0);
-  
-  cout << "Welcome to " << programName << endl;
-}
-
-
-void init_gl_window(){
-  char *argv[] = {programName};
-  int argc = sizeof(argv) / sizeof(argv[0]);
-  
-  glutInit(&argc, argv);
-  glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE );
-  glutInitWindowSize(WIDTH,HEIGHT);
-  glutInitWindowPosition(100,100);
-  glutCreateWindow(programName);
-  init();
-  
-  glutDisplayFunc(drawWindow);
-  glutIdleFunc(update);
-  glutReshapeFunc(reshape);
-  glutKeyboardFunc(keyboard);
-  glutKeyboardUpFunc(keyboardUp);
-  glutMouseFunc(mouse);
-  glutMotionFunc(mouse_motion);
-  
-  glutMainLoop();
 }
 
 void init_area(){
