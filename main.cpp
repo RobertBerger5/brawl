@@ -41,6 +41,7 @@ void keyboard(unsigned char c, int x, int y){
   case 'w':
   case 'W':
     for(int i=0;i<PLATS;i++){
+      //TODO: maybe just make it so if the y is EXACTLY right, then let em jump
       if(platforms[i]->inBounds(player)){
 	player.yV=-4;
 	player.y--;
@@ -125,10 +126,10 @@ void mouse_motion(int x,int y){
 
 void drawWindow(){
   glClear(GL_COLOR_BUFFER_BIT);// clear buffer
-
+  
   glColor3f(0,0,0);
   drawBox(0,0,WIDTH,HEIGHT,true);//background
-
+  
   glColor3f(.5,.5,.5);
   for(int i=0;i<PLATS;i++){
     platforms[i]->draw();
@@ -144,7 +145,7 @@ void drawWindow(){
 }
 
 void update(){//TODO: control accel and speed with pythag theorem?
-  bool touch=false;
+  /*bool touch=false;
   for(int i=0;i<PLATS;i++){
     if(platforms[i]->fallOnto(player)){
       player.y=platforms[i]->y-player.height;
@@ -155,6 +156,15 @@ void update(){//TODO: control accel and speed with pythag theorem?
   }
   if(!touch){
     player.yV-=GRAVITY;
+  }*/
+
+  player.yV-=GRAVITY;
+  
+  for(int i=0;i<PLATS;i++){
+    if(platforms[i]->inBounds(player)){
+      //cout<<"uh oh spaghettios "<<endl;
+      player.collide(*platforms[i]);
+    }
   }
   
   if(keys['w']==true){
@@ -171,7 +181,7 @@ void update(){//TODO: control accel and speed with pythag theorem?
     if(player.xV < player.maxSpeed)
       player.xV+=player.accel;
   }
-
+  
   if(keys['k']==true)
     cout<<player.xV<<endl;
   
@@ -196,7 +206,7 @@ int main(int argc, char *argv[]){
   for(int i=0;i<argc;i++){
     cout<<argv[i]<<endl;
   }
-
+  
   init_area();
   
   init_gl_window();

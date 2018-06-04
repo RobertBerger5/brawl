@@ -1,6 +1,10 @@
 #ifndef _CRITTER_
 #define _CRITTER_
 
+#include "Platform.h"
+
+class Platform;
+
 class Critter{
  public:
   int x,y;
@@ -8,6 +12,7 @@ class Critter{
   int maxSpeed;
   float accel;
   int width,height;
+  int health;
   
   //Image img;//TODO: is there a more efficient glut way to do this?
   //TODO: enum for which animation to do
@@ -15,19 +20,12 @@ class Critter{
   Critter();
   Critter(int x1,int y1,int w,int h);//TODO: add image somehow
   Critter(const Critter& src);
-  //TODO: destructor when pointers get in here
-  
-  int getX(){return x;};
-  int getY(){return y;};
-  /*int getXV(){return xV;};
-  int getYV(){return yV;};
-  int getXA(){return xA;};
-  int getYA(){return yA;};*/
-  int getW(){return width;};
-  int getH(){return height;};
+  //make a destructor if pointers are added
   
   virtual void update();//TODO: make virtual
   void draw();
+  
+  void collide(const Platform& plat);
 };
 
 #endif

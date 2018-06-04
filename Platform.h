@@ -3,6 +3,9 @@
 
 #include "Critter.h"
 
+class Critter;
+
+
 class Platform{
  public:
   int x,y;
@@ -13,11 +16,10 @@ class Platform{
   
   bool inBounds(int x1,int y1);
   bool inBounds(const Critter& crit);
-  bool fallOnto(const Critter& crit);
-
-  void draw();
+  //bool fallOnto(const Critter& crit);
   
-  //maybe implement moving platforms of some kind later?
+  
+  void draw(); 
 };
 
 #endif

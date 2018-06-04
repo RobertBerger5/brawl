@@ -10,13 +10,13 @@ endif
 
 
 brawl: main.o Critter.o Player.o Platform.o
-	g++ $(OPTS) -o brawl $(PATHS) main.o Critter.o Player.o Platform.o $(LIBS)
+	g++ $(OPTS) -o brawl main.o Critter.o Player.o Platform.o $(LIBS)
 
 main.o: main.cpp Critter.h Player.h Platform.h glutfuncs.h
-	g++ $(OPTS) $(MACOSX_DEFINE) $(PATHS) -c main.cpp
+	g++ $(OPTS) $(MACOSX_DEFINE) -c main.cpp
 
 
-Critter.o:	Critter.h Critter.cpp
+Critter.o:	Critter.h Critter.cpp Platform.h
 	g++ $(OPTS) -c Critter.cpp
 
 Player.o:	Player.h Player.cpp Critter.h
@@ -28,4 +28,4 @@ Platform.o:	Platform.h Platform.cpp Critter.h
 
 
 clean:
-	rm -f *.o brawl *~ \#*\#
+	rm -f *.o brawl *~

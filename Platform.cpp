@@ -39,7 +39,7 @@ bool Platform::inBounds(const Critter& crit){//no tolerance for hitboxes?
 	 );
 }
 
-bool Platform::fallOnto(const Critter& crit){
+/*bool Platform::fallOnto(const Critter& crit){
   //want the critter to be falling (yV>0)
   //also want the top of the critter to be above the box
   //lower area needs to be inside tho
@@ -50,6 +50,7 @@ bool Platform::fallOnto(const Critter& crit){
 	 crit.y+crit.height >= y  &&  crit.y+crit.height <= y+height //bottom in
 	);
 }
+*/
 
 void Platform::draw(){
   glBegin(GL_POLYGON);
