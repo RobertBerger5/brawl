@@ -97,8 +97,8 @@ void init_gl_window(){
   glutReshapeFunc(reshape);
   glutKeyboardFunc(keyboard);
   glutKeyboardUpFunc(keyboardUp);
-  glutMouseFunc(mouse);
-  glutMotionFunc(mouse_motion);
+  //glutMouseFunc(mouse);
+  //glutMotionFunc(mouse_motion);
   
   glutMainLoop();
 }

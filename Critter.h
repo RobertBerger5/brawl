@@ -22,10 +22,10 @@ class Critter{
   Critter(const Critter& src);
   //make a destructor if pointers are added
   
-  virtual void update();//TODO: make virtual
+  virtual void update(Platform** plats,int platNum);//TODO: make virtual
   void draw();
   
-  void collide(const Platform& plat);
+  void collide(Platform& plat);
 };
 
 #endif
