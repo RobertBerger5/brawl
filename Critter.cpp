@@ -41,12 +41,13 @@ Critter::Critter(const Critter& src){
   health=src.health;
 }
 
-void Critter::update(Platform** plats,int platNum){
+void Critter::update(Platform** plats,Critter** crits){
   x+=xV;
   y+=yV;
 }
 
 void Critter::draw(){
+  glColor3f(r,g,b);
   glBegin(GL_POLYGON);
   glVertex2f(x,y);
   glVertex2f(x+width,y);
@@ -55,7 +56,7 @@ void Critter::draw(){
   glEnd();
 }
 
-void Critter::collide(Platform& plat){
+int Critter::collide(Platform& plat){
   //TODO: there's some weirdness here...
   //also I could have them bounce off or lose health...
   if(x-xV+ width < plat.x  &&  x+width > plat.x){//left->inside
@@ -77,5 +78,7 @@ void Critter::collide(Platform& plat){
     y=plat.y+plat.height;
     //stop y motion, place em below
   }
+
+  return 0;//worked fine
 }
 

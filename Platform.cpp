@@ -12,6 +12,9 @@ Platform::Platform(int x1,int y1,int w,int h){
   y=y1;
   width=w;
   height=h;
+  r=.5;
+  g=.8;
+  b=1;
 }
 
 Platform::Platform(const Platform& src){
@@ -30,7 +33,7 @@ bool Platform::inBounds(int x1,int y1){
 	  );
 }
 //maybe have an inbounds for rectangle?
-bool Platform::inBounds(const Critter& crit){//no tolerance for hitboxes?
+bool Platform::totallyInBounds(const Critter& crit){
   return(
 	 crit.x+crit.width >= x &&
 	 crit.x <= x+width &&
@@ -38,21 +41,16 @@ bool Platform::inBounds(const Critter& crit){//no tolerance for hitboxes?
 	 crit.y <= y+height
 	 );
 }
-
-/*bool Platform::fallOnto(const Critter& crit){
-  //want the critter to be falling (yV>0)
-  //also want the top of the critter to be above the box
-  //lower area needs to be inside tho
-  return(
-	 crit.yV>0 && //falling
-	 crit.y+crit.height/2<y && //middle of crit is above plat
-	 crit.x <= x+width  &&  crit.x+crit.width >=x && //critter in plat
-	 crit.y+crit.height >= y  &&  crit.y+crit.height <= y+height //bottom in
-	);
+bool Platform::inBounds(const Critter& crit){
+  return(inBounds(crit.x,crit.y) ||
+	 inBounds(crit.x+crit.width,crit.y) ||
+	 inBounds(crit.x+crit.width,crit.y+crit.height) ||
+	 inBounds(crit.x,crit.y+crit.height)
+	 );
 }
-*/
 
 void Platform::draw(){
+  glColor3f(r,g,b);
   glBegin(GL_POLYGON);
   glVertex2f(x,y);
   glVertex2f(x+width,y);

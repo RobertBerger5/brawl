@@ -9,21 +9,24 @@ endif
 
 
 
-brawl: main.o Critter.o Player.o Platform.o
-	g++ $(OPTS) -o brawl main.o Critter.o Player.o Platform.o $(LIBS)
+brawl: main.o Critter.o Player.o Platform.o Bird.o
+	g++ $(OPTS) -o brawl main.o Critter.o Player.o Platform.o Bird.o $(LIBS)
 
-main.o: main.cpp Critter.h Player.h Platform.h glutfuncs.h
+main.o: main.cpp Critter.h Player.h Platform.h Bird.h glutfuncs.h constants.h
 	g++ $(OPTS) $(MACOSX_DEFINE) -c main.cpp
 
 
-Critter.o:	Critter.h Critter.cpp Platform.h
+Critter.o:	Critter.h Critter.cpp Platform.h constants.h
 	g++ $(OPTS) -c Critter.cpp
 
-Player.o:	Player.h Player.cpp Critter.h
+Player.o:	Player.h Player.cpp Critter.h constants.h
 	g++ $(OPTS) -c Player.cpp
 
+Bird.o:		Bird.h Bird.cpp Critter.h constants.h
+	g++ $(OPTS) -c Bird.cpp
 
-Platform.o:	Platform.h Platform.cpp Critter.h
+
+Platform.o:	Platform.h Platform.cpp Critter.h constants.h
 	g++ $(OPTS) -c Platform.cpp
 
 
