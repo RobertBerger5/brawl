@@ -21,6 +21,7 @@ class Critter{
   int maxSpeed;
   float accel;
   int width,height;
+  int maxH;
   int health;
   int damage;
   float r,g,b;

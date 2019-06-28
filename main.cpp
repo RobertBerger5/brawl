@@ -39,7 +39,7 @@ Critter** critters;
 
 
 void keyboard(unsigned char c, int x, int y){
-  //TODO: the quit button should word even without "players"
+  //TODO: the quit button should work even without "players"
   player.keyboard(c);
 }
 void keyboardUp(unsigned char c, int x, int y){
@@ -49,7 +49,7 @@ void keyboardUp(unsigned char c, int x, int y){
 void drawWindow(){
   glClear(GL_COLOR_BUFFER_BIT);// clear buffer
   
-  glColor3f(0,0,0);
+  glColor3f(1,1,1);
   drawBox(0,0,WIDTH,HEIGHT,true);//background
 
   glColor3f(.5,.5,.5);
@@ -110,10 +110,10 @@ void init_area(){
   
   critters=new Critter*[CRITTERS];
   critters[0]=&player;
-  for(int i=1;i<CRITTERS;i++){//TODO: fix
+  for(int i=1;i<CRITTERS;i++){
     int x=(rand()%(WIDTH-50))+25;
     int y=(rand()%(HEIGHT-50))+25;
-    double ang=rand()/(double)100000000;//fuccc
+    double ang=rand()/(double)100000000;
     critters[i]=new Bird(x,y,ang);
   }
 }
@@ -127,3 +127,10 @@ int main(int argc, char *argv[]){
   
   init_gl_window();
 }
+
+
+/*
+okay so I'm thinking the player's damage should be like multiplied
+by like 10 or something if they're crouching, but have them uncrouch
+as soon as they land on ground.
+ */

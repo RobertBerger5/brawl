@@ -12,6 +12,7 @@ const int CRITTERS=10;
 const int PLAYERSIZE=25;
 const int BIRDSIZE=10;
 const double BIRDVIEWANGLE=PI/20;//can see 45 degrees (bc both sides)
+const int HEALTHBARSIZE=10;
 
 
 #endif

@@ -21,24 +21,26 @@ Bird::Bird(){
 
 Bird::Bird(int x1,int y1,double ang) : Critter(x1,y1,BIRDSIZE,BIRDSIZE){
   angle=ang;
-  r=g=0;
-  b=1;
-  accel=(rand()%100)/(float)100+1;
+  r=g=.9;
+  b=0;
+  accel=(rand()%100)/(float)100+2;
   target=0;
   cw=(rand()%2)*2-1;//either 1 or -1 (which way it'll turn in idle)
+  turn=(rand()%10)/(float)1000+.1;
 };
 
 
 void Bird::draw(){
   //draw directions
-  if(target)
+  /*if(target)
     glColor3f(1,0,0);
   else
-    glColor3f(0,1,0);
+  glColor3f(0,1,0);*/
+  glColor3f(0,0,0);
   glBegin(GL_LINES);
   glVertex2f(x+width/2,y+height/2);
-  glVertex2f(x+width/2+cos(angle)*BIRDSIZE*3,
-	     y+height/2+sin(angle)*BIRDSIZE*3);
+  glVertex2f(x+width/2+cos(angle)*-1*BIRDSIZE,
+	     y+height/2+sin(angle)*-1*BIRDSIZE);
   
   //sight lines
   /*glVertex2f(x+width/2,y+height/2);
@@ -66,9 +68,9 @@ void Bird::update(Platform** plats,Critter** crits){
 
       
       if(getAngle(target->x+target->width/2,target->y+target->height/2) < angle)
-	angle-=.02;
+	angle-=turn;
       else
-	angle+=.02;
+	angle+=turn;
       
       if(angle>2*PI)
 	angle=0;
@@ -81,7 +83,7 @@ void Bird::update(Platform** plats,Critter** crits){
     }
   }else{
     //cout<<"looking for target...";
-    angle+=.01*cw;//fly in a circle (clockwise). should I give each a boolean for this?
+    angle+=turn*cw;//fly in a circle (clockwise). should I give each a boolean for this?
     if(angle>2*PI)
       angle=0;
     else if(angle<0)

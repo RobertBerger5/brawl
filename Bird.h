@@ -12,6 +12,7 @@ class Bird : public Critter{
   double angle;//where the bird is looking
   Critter* target;//target to pursue
   int cw;
+  float turn;
   
   
   Bird();

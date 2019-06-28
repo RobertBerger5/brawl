@@ -8,6 +8,8 @@
 
 #include "Critter.h"
 #include "Platform.h"
+#include "constants.h"
+
 
 using namespace std;
 
@@ -17,7 +19,9 @@ Critter::Critter(){
   maxSpeed=5;
   accel=.1;
   width=height=25;
-  health=100;
+  maxH=health=100;
+  damage=10;
+  r=g=b=0;
 }
 
 Critter::Critter(int x1,int y1,int w,int h){
@@ -28,7 +32,9 @@ Critter::Critter(int x1,int y1,int w,int h){
   accel=.2;
   width=w;
   height=h;
-  health=100;
+  maxH=health=100;
+  damage=10;
+  r=g=b=0;
 }
 Critter::Critter(const Critter& src){
   x=src.x;
@@ -39,6 +45,12 @@ Critter::Critter(const Critter& src){
   width=src.width;
   height=src.height;
   health=src.health;
+  maxH=src.maxH;
+  health=src.health;
+  damage=src.damage;
+  r=src.r;
+  g=src.g;
+  b=src.b;
 }
 
 void Critter::update(Platform** plats,Critter** crits){
@@ -53,6 +65,22 @@ void Critter::draw(){
   glVertex2f(x+width,y);
   glVertex2f(x+width,y+height);
   glVertex2f(x,y+height);
+  glEnd();
+  
+  glColor3f(1,0,0);
+  glBegin(GL_POLYGON);
+  glVertex2f(x+width/2-HEALTHBARSIZE/2,y-HEALTHBARSIZE/5);
+  glVertex2f(x+width/2+HEALTHBARSIZE/2,y-HEALTHBARSIZE/5);
+  glVertex2f(x+width/2+HEALTHBARSIZE/2,y);
+  glVertex2f(x+width/2-HEALTHBARSIZE/2,y);
+  glEnd();
+  
+  glColor3f(0,1,0);
+  glBegin(GL_POLYGON);
+  glVertex2f(x+width/2-HEALTHBARSIZE/2,y-HEALTHBARSIZE/5);
+  glVertex2f(x+width/2+HEALTHBARSIZE/2-health/maxH,y-HEALTHBARSIZE/5);
+  glVertex2f(x+width/2+HEALTHBARSIZE/2-health/maxH,y);
+  glVertex2f(x+width/2-HEALTHBARSIZE/2,y);
   glEnd();
 }
 

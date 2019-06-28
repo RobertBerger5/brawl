@@ -100,8 +100,7 @@ void Player::update(Platform** plats,Critter** crits){
   if(keys['d']==true && !ducking && xV < maxSpeed)
     xV+=accel;
   
-  x+=xV;
-  y+=yV;
+  Critter::update(plats,crits);//TODO: put the falling shit in this somehow...
 }
 
 int Player::collide(Platform& plat){
